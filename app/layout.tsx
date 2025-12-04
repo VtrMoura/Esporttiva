@@ -6,9 +6,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AccessibilityControls from "@/components/AccessibilityControls";
 
-// IMPORTA O VLibras AQUI 👇
-import VLibras from "@/components/VLibras";
-
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
@@ -24,9 +21,27 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={inter.variable}>
+        
+        {/* VLibras integrado via HTML puro */}
+        <div
+          dangerouslySetInnerHTML={{
+            __html: `
+              <div vw class="enabled">
+                <div vw-access-button></div>
+                <div vw-plugin-wrapper>
+                  <div class="vw-plugin-top-wrapper"></div>
+                </div>
+              </div>
 
-        {/* VLibras funcionando */}
-        <VLibras />
+              <script src="https://plugin.vlibras.gov.br/app/vlibras-plugin.js"></script>
+              <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                  new window.VLibras.Widget("https://plugin.vlibras.gov.br/app");
+                });
+              </script>
+            `,
+          }}
+        />
 
         {/* Cabeçalho */}
         <Navbar />
