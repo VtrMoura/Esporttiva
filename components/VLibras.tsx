@@ -1,36 +1,31 @@
 "use client";
 
-import { useEffect } from "react";
+import Script from "next/script";
 
 export default function VLibras() {
-  useEffect(() => {
-    // não duplica
-    if (document.getElementById("vlibras-container")) return;
+  return (
+    <>
+      <Script
+        src="https://plugin.vlibras.gov.br/app/vlibras-plugin.js"
+        strategy="afterInteractive"
+        onLoad={() => {
+          // @ts-expect-error
+          new window.VLibras.Widget("https://plugin.vlibras.gov.br/app");
+        }}
+      />
 
-    // cria container bruto
-    const container = document.createElement("div");
-    container.id = "vlibras-container";
-    container.innerHTML = `
-      <div vw class="enabled">
-        <div vw-access-button></div>
-        <div vw-plugin-wrapper>
-          <div class="vw-plugin-top-wrapper"></div>
-        </div>
-      </div>
-    `;
-    document.body.appendChild(container);
-
-    // script
-    const script = document.createElement("script");
-    script.src = "https://plugin.vlibras.gov.br/app/vlibras-plugin.js";
-    script.defer = true;
-    script.onload = () => {
-      // @ts-ignore
-      new window.VLibras.Widget("https://plugin.vlibras.gov.br/app");
-    };
-
-    document.body.appendChild(script);
-  }, []);
-
-  return null;
+      <div
+        dangerouslySetInnerHTML={{
+          __html: `
+            <div vw class="enabled">
+              <div vw-access-button></div>
+              <div vw-plugin-wrapper>
+                <div class="vw-plugin-top-wrapper"></div>
+              </div>
+            </div>
+          `,
+        }}
+      />
+    </>
+  );
 }

@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 
 export default function AccessibilityControls() {
-  const [lightMode, setLightMode] = useState(false);
   const [colorblindMode, setColorblindMode] = useState(false);
   const [readingRuler, setReadingRuler] = useState(false);
   const [focusMode, setFocusMode] = useState(false);
